@@ -1,4 +1,4 @@
-# pytest-live-results (in development)
+# pytest-live-results
 
 
 Plugin to create live results for pytest.
@@ -32,7 +32,13 @@ Plugin to create live results for pytest.
 
 ---
 
-*Thanks for using pytest-email!*
+*SAMPLE REPORT*
+
+<img src="live_result.jpg" alt="live_result.jpg">
+
+---
+
+*Thanks for using pytest-live-result!*
 
 If you have any questions / suggestions / comments on this, please feel free to reach me at
 

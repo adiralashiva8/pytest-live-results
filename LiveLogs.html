@@ -1,0 +1,231 @@
+
+    <html>
+
+    <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+        <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    </head>
+
+    <body>
+
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td>
+                        <h2 style="color:Brown;padding-left: 10px;">Live Execution Results</h2></td>
+                    <td style="text-align: right;padding-right: 30px;">Set Page Refresh Rate:
+                        <input type="button" class="btn btn-primary" value="1 Minute" onclick="setRe(60);" />
+                        <input type="button" class="btn btn-primary" value="5 Minute" onclick="setRe(300);"/>
+                        <input type="button" class="btn btn-danger" value="No Refresh" onclick="setRe(0);" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </br>
+        <table width="100%;">
+            <tbody>
+                <tr style="text-align: center; height:35px;color:white">
+                    <td style="border-radius: 25px;width: 12.5%;background: DARKSLATEBLUE;">TOTAL</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: DARKCYAN;">EXECUTED</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: FORESTGREEN;">PASS&nbsp;&nbsp;</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: RED;">FAIL&nbsp;&nbsp;</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: ORANGERED;">SKIP&nbsp;&nbsp;</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: RED;">ERROR</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: CORAL;">xPASS</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: FIREBRICK;">xFAIL</td>
+                </tr>
+                <tr style="text-align: center; height: 35px;">
+                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">15</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">13</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">5</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">6</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">2</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">0</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">1</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">1</td>
+                </tr>
+            </tbody>
+        </table>
+        </br>
+        <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th style="width: 8%">I</th>
+                    <th style="width: 30%">Test Case</th>
+                    <th style="width: 10%">Status</th>
+                    <th style="width: 10%">Duration (s)</th>
+                    <th style="width: 30%">Error Message</th>
+                </tr>
+            </thead>
+            <tbody style=>
+            
+        <tr>
+            <td style="width: 8%; text-align:center;">1</td>
+            <td style="width: 30%;">test_comparewithAA</td>
+            <td style="width: 10%; "text-align:center;">FAIL</td>
+            <td style="width: 10%; text-align:center;">0.09</td>
+            <td style="width: 30%;">assert 25 == 35</td>
+        </tr>
+    
+        <tr>
+            <td style="width: 8%; text-align:center;">2</td>
+            <td style="width: 30%;">test_comparewithBB</td>
+            <td style="width: 10%; "text-align:center;">PASS</td>
+            <td style="width: 10%; text-align:center;">0.0</td>
+            <td style="width: 30%;"></td>
+        </tr>
+    
+        <tr>
+            <td style="width: 8%; text-align:center;">3</td>
+            <td style="width: 30%;">test_comparewithCC</td>
+            <td style="width: 10%; "text-align:center;">FAIL</td>
+            <td style="width: 10%; text-align:center;">0.03</td>
+            <td style="width: 30%;">assert 45 == 35</td>
+        </tr>
+    
+        <tr>
+            <td style="width: 8%; text-align:center;">4</td>
+            <td style="width: 30%;">test_file1_method1</td>
+            <td style="width: 10%; "text-align:center;">FAIL</td>
+            <td style="width: 10%; text-align:center;">0.01</td>
+            <td style="width: 30%;">assert 5 == 6</td>
+        </tr>
+    
+        <tr>
+            <td style="width: 8%; text-align:center;">5</td>
+            <td style="width: 30%;">test_file1_method2</td>
+            <td style="width: 10%; "text-align:center;">PASS</td>
+            <td style="width: 10%; text-align:center;">0.0</td>
+            <td style="width: 30%;"></td>
+        </tr>
+    
+        <tr>
+            <td style="width: 8%; text-align:center;">6</td>
+            <td style="width: 30%;">test_add[5-5-10]</td>
+            <td style="width: 10%; "text-align:center;">PASS</td>
+            <td style="width: 10%; text-align:center;">0.0</td>
+            <td style="width: 30%;"></td>
+        </tr>
+    
+        <tr>
+            <td style="width: 8%; text-align:center;">7</td>
+            <td style="width: 30%;">test_add[3-5-12]</td>
+            <td style="width: 10%; "text-align:center;">FAIL</td>
+            <td style="width: 10%; text-align:center;">0.05</td>
+            <td style="width: 30%;">assert (3 + 5) == 12</td>
+        </tr>
+    
+        <tr>
+            <td style="width: 8%; text-align:center;">8</td>
+            <td style="width: 30%;">test_file2_method1</td>
+            <td style="width: 10%; "text-align:center;">FAIL</td>
+            <td style="width: 10%; text-align:center;">0.01</td>
+            <td style="width: 30%;">assert 5 == 6</td>
+        </tr>
+    
+        <tr>
+            <td style="width: 8%; text-align:center;">9</td>
+            <td style="width: 30%;">test_file2_method2</td>
+            <td style="width: 10%; "text-align:center;">PASS</td>
+            <td style="width: 10%; text-align:center;">0.0</td>
+            <td style="width: 30%;"></td>
+        </tr>
+    
+        <tr>
+            <td style="width: 8%; text-align:center;">10</td>
+            <td style="width: 30%;">test_add_1</td>
+            <td style="width: 10%; "text-align:center;">SKIP</td>
+            <td style="width: 10%; text-align:center;">0.02</td>
+            <td style="width: 30%;">('atest\\test_xfail_skip.py', 2, u'Skipped: unconditional skip')</td>
+        </tr>
+    
+        <tr>
+            <td style="width: 8%; text-align:center;">11</td>
+            <td style="width: 30%;">test_add_2</td>
+            <td style="width: 10%; "text-align:center;">SKIP</td>
+            <td style="width: 10%; text-align:center;">0.03</td>
+            <td style="width: 30%;">('atest\\test_xfail_skip.py', 6, u'Skipped: unconditional skip')</td>
+        </tr>
+    
+        <tr>
+            <td style="width: 8%; text-align:center;">12</td>
+            <td style="width: 30%;">test_add_3</td>
+            <td style="width: 10%; "text-align:center;">xPASS</td>
+            <td style="width: 10%; text-align:center;">0.0</td>
+            <td style="width: 30%;"></td>
+        </tr>
+    
+        <tr>
+            <td style="width: 8%; text-align:center;">13</td>
+            <td style="width: 30%;">test_add_4</td>
+            <td style="width: 10%; "text-align:center;">xFAIL</td>
+            <td style="width: 10%; text-align:center;">0.0</td>
+            <td style="width: 30%;">assert (15 + 13) == 100</td>
+        </tr>
+    
+        <tr>
+            <td style="width: 8%; text-align:center;">14</td>
+            <td style="width: 30%;">test_add_5</td>
+            <td style="width: 10%; "text-align:center;">PASS</td>
+            <td style="width: 10%; text-align:center;">0.0</td>
+            <td style="width: 30%;"></td>
+        </tr>
+    
+        <tr>
+            <td style="width: 8%; text-align:center;">15</td>
+            <td style="width: 30%;">test_add_6</td>
+            <td style="width: 10%; "text-align:center;">FAIL</td>
+            <td style="width: 10%; text-align:center;">0.0</td>
+            <td style="width: 30%;">assert (3 + 2) == 6</td>
+        </tr>
+    
+        </table>
+        <script>
+            $(document).ready(function() {
+                $('#example').DataTable({
+                    "order": [
+                        [0, "desc"]
+                    ]
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            var reIt
+
+            function doit() {
+                if (window.location.reload)
+                    window.location.reload(true);
+                else if (window.location.replace)
+                    window.location.replace(unescape(location.href))
+                else
+                    window.location.href = unescape(location.href)
+            }
+
+            function startUp() {
+                if (unescape(document.cookie).split(';')[1])
+                    reIt = setTimeout("doit()", unescape(document.cookie).split(';')[1])
+                else
+                    reIt = setTimeout("doit()", 60000)
+            }
+
+            function setRe(val) {
+                clearTimeout(reIt)
+                if (val == 0) {
+                    document.cookie = ''
+                    return;
+                } else
+                    document.cookie = val * 1000
+                startUp();
+            }
+
+            onload = startUp
+        </script>
+    </body>
+
+    </html>
+    
