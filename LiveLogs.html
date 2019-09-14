@@ -29,25 +29,25 @@
         </br>
         <table width="100%;">
             <tbody>
-                <tr style="text-align: center; height:35px;color:white">
+                <tr style="text-align: center; height:40px;color:white">
                     <td style="border-radius: 25px;width: 12.5%;background: DARKSLATEBLUE;">TOTAL</td>
                     <td style="border-radius: 25px;width: 12.5%;background: DARKCYAN;">EXECUTED</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: FORESTGREEN;">PASS&nbsp;&nbsp;</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: RED;">FAIL&nbsp;&nbsp;</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: ORANGERED;">SKIP&nbsp;&nbsp;</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: RED;">ERROR</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: CORAL;">xPASS</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: FIREBRICK;">xFAIL</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: FORESTGREEN;">PASS</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: RED;">FAIL</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: DARKKHAKI;">SKIP</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: GRAY;">ERROR</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: SEAGREEN;">xPASS</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: TOMATO;">xFAIL</td>
                 </tr>
-                <tr style="text-align: center; height: 35px;">
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">15</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">13</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">5</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">6</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">2</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">0</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">1</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">1</td>
+                <tr style="text-align: center; height: 40px; font-weight:bold">
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">15</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">13</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">5</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">6</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">2</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">0</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">1</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">1</td>
                 </tr>
             </tbody>
         </table>
@@ -55,7 +55,7 @@
         <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>
-                    <th style="width: 8%">I</th>
+                    <th style="width: 8%">SN</th>
                     <th style="width: 30%">Test Case</th>
                     <th style="width: 10%">Status</th>
                     <th style="width: 10%">Duration (s)</th>
@@ -68,7 +68,7 @@
             <td style="width: 8%; text-align:center;">1</td>
             <td style="width: 30%;">test_comparewithAA</td>
             <td style="width: 10%; "text-align:center;">FAIL</td>
-            <td style="width: 10%; text-align:center;">0.09</td>
+            <td style="width: 10%; text-align:center;">0.12</td>
             <td style="width: 30%;">assert 25 == 35</td>
         </tr>
     
@@ -76,7 +76,7 @@
             <td style="width: 8%; text-align:center;">2</td>
             <td style="width: 30%;">test_comparewithBB</td>
             <td style="width: 10%; "text-align:center;">PASS</td>
-            <td style="width: 10%; text-align:center;">0.0</td>
+            <td style="width: 10%; text-align:center;">0.01</td>
             <td style="width: 30%;"></td>
         </tr>
     
@@ -84,7 +84,7 @@
             <td style="width: 8%; text-align:center;">3</td>
             <td style="width: 30%;">test_comparewithCC</td>
             <td style="width: 10%; "text-align:center;">FAIL</td>
-            <td style="width: 10%; text-align:center;">0.03</td>
+            <td style="width: 10%; text-align:center;">0.02</td>
             <td style="width: 30%;">assert 45 == 35</td>
         </tr>
     
@@ -92,7 +92,7 @@
             <td style="width: 8%; text-align:center;">4</td>
             <td style="width: 30%;">test_file1_method1</td>
             <td style="width: 10%; "text-align:center;">FAIL</td>
-            <td style="width: 10%; text-align:center;">0.01</td>
+            <td style="width: 10%; text-align:center;">0.02</td>
             <td style="width: 30%;">assert 5 == 6</td>
         </tr>
     
@@ -100,7 +100,7 @@
             <td style="width: 8%; text-align:center;">5</td>
             <td style="width: 30%;">test_file1_method2</td>
             <td style="width: 10%; "text-align:center;">PASS</td>
-            <td style="width: 10%; text-align:center;">0.0</td>
+            <td style="width: 10%; text-align:center;">0.01</td>
             <td style="width: 30%;"></td>
         </tr>
     
@@ -116,7 +116,7 @@
             <td style="width: 8%; text-align:center;">7</td>
             <td style="width: 30%;">test_add[3-5-12]</td>
             <td style="width: 10%; "text-align:center;">FAIL</td>
-            <td style="width: 10%; text-align:center;">0.05</td>
+            <td style="width: 10%; text-align:center;">0.07</td>
             <td style="width: 30%;">assert (3 + 5) == 12</td>
         </tr>
     
@@ -124,7 +124,7 @@
             <td style="width: 8%; text-align:center;">8</td>
             <td style="width: 30%;">test_file2_method1</td>
             <td style="width: 10%; "text-align:center;">FAIL</td>
-            <td style="width: 10%; text-align:center;">0.01</td>
+            <td style="width: 10%; text-align:center;">0.02</td>
             <td style="width: 30%;">assert 5 == 6</td>
         </tr>
     
@@ -140,7 +140,7 @@
             <td style="width: 8%; text-align:center;">10</td>
             <td style="width: 30%;">test_add_1</td>
             <td style="width: 10%; "text-align:center;">SKIP</td>
-            <td style="width: 10%; text-align:center;">0.02</td>
+            <td style="width: 10%; text-align:center;">0.05</td>
             <td style="width: 30%;">('atest\\test_xfail_skip.py', 2, u'Skipped: unconditional skip')</td>
         </tr>
     
@@ -148,7 +148,7 @@
             <td style="width: 8%; text-align:center;">11</td>
             <td style="width: 30%;">test_add_2</td>
             <td style="width: 10%; "text-align:center;">SKIP</td>
-            <td style="width: 10%; text-align:center;">0.03</td>
+            <td style="width: 10%; text-align:center;">0.09</td>
             <td style="width: 30%;">('atest\\test_xfail_skip.py', 6, u'Skipped: unconditional skip')</td>
         </tr>
     
@@ -156,7 +156,7 @@
             <td style="width: 8%; text-align:center;">12</td>
             <td style="width: 30%;">test_add_3</td>
             <td style="width: 10%; "text-align:center;">xPASS</td>
-            <td style="width: 10%; text-align:center;">0.0</td>
+            <td style="width: 10%; text-align:center;">0.01</td>
             <td style="width: 30%;"></td>
         </tr>
     
@@ -164,7 +164,7 @@
             <td style="width: 8%; text-align:center;">13</td>
             <td style="width: 30%;">test_add_4</td>
             <td style="width: 10%; "text-align:center;">xFAIL</td>
-            <td style="width: 10%; text-align:center;">0.0</td>
+            <td style="width: 10%; text-align:center;">0.01</td>
             <td style="width: 30%;">assert (15 + 13) == 100</td>
         </tr>
     
@@ -180,11 +180,17 @@
             <td style="width: 8%; text-align:center;">15</td>
             <td style="width: 30%;">test_add_6</td>
             <td style="width: 10%; "text-align:center;">FAIL</td>
-            <td style="width: 10%; text-align:center;">0.0</td>
+            <td style="width: 10%; text-align:center;">0.01</td>
             <td style="width: 30%;">assert (3 + 2) == 6</td>
         </tr>
     
         </table>
+        <div class="row">
+            <div class="col-md-12" style="height:25px;width:auto;">
+                <p class="text-muted" style="text-align:center;font-size:9px"> <a href="https://github.com/adiralashiva8/pytest-live-results" target="_blank">pytest-live-results</a>
+                </p>
+            </div>
+        </div>
         <script>
             $(document).ready(function() {
                 $('#example').DataTable({

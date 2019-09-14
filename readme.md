@@ -12,7 +12,10 @@ Plugin to create live results for pytest.
 ### How it works:
 
  - Get execution details using `hooks`
- - Build live results
+ - Open browser with live results
+ - Updates report based on refresh rate selction
+
+ **Note:** User can specify refresh time in page i.e., `1` or `5` minutes or can turnoff refresh
 
 ---
 
@@ -29,6 +32,12 @@ Plugin to create live results for pytest.
    ```
    pip install git+https://github.com/adiralashiva8/pytest-live-results
    ```
+
+3. Execute test case normally
+    ```
+    pytest
+    ```
+    > No code changes or run command required
 
 ---
 
@@ -52,6 +61,8 @@ If you have any questions / suggestions / comments on this, please feel free to 
 
  - [Pytest-dev](https://github.com/pytest-dev)
  - [Stackoverflow](https://stackoverflow.com/questions/tagged/pytest)
+ - [Datatable](https://datatables.net)
+ - [pytest-community]()
 
 ---
 

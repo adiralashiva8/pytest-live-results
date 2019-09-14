@@ -174,25 +174,25 @@ def get_html_template():
         </br>
         <table width="100%;">
             <tbody>
-                <tr style="text-align: center; height:35px;color:white">
+                <tr style="text-align: center; height:40px;color:white">
                     <td style="border-radius: 25px;width: 12.5%;background: DARKSLATEBLUE;">TOTAL</td>
                     <td style="border-radius: 25px;width: 12.5%;background: DARKCYAN;">EXECUTED</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: FORESTGREEN;">PASS&nbsp;&nbsp;</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: RED;">FAIL&nbsp;&nbsp;</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: ORANGERED;">SKIP&nbsp;&nbsp;</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: RED;">ERROR</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: CORAL;">xPASS</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: FIREBRICK;">xFAIL</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: FORESTGREEN;">PASS</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: RED;">FAIL</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: DARKKHAKI;">SKIP</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: GRAY;">ERROR</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: SEAGREEN;">xPASS</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: TOMATO;">xFAIL</td>
                 </tr>
-                <tr style="text-align: center; height: 35px;">
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">__total__</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">__executed__</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">__pass__</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">__fail__</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">__skip__</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">__error__</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">__xpass__</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: Silver;">__xfail__</td>
+                <tr style="text-align: center; height: 40px; font-weight:bold">
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__total__</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__executed__</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__pass__</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__fail__</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__skip__</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__error__</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__xpass__</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__xfail__</td>
                 </tr>
             </tbody>
         </table>
@@ -200,7 +200,7 @@ def get_html_template():
         <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>
-                    <th style="width: 8%">I</th>
+                    <th style="width: 8%">SN</th>
                     <th style="width: 30%">Test Case</th>
                     <th style="width: 10%">Status</th>
                     <th style="width: 10%">Duration (s)</th>
