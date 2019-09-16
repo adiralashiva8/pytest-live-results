@@ -3,6 +3,8 @@
 
 Plugin to create live results for pytest.
 
+[![PyPI version](https://badge.fury.io/py/pytest-live.svg)](https://badge.fury.io/py/pytest-live)
+[![Downloads](https://pepy.tech/badge/pytest-live)](https://pepy.tech/project/pytest-live)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]()
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)]()
 [![Open Source Love png1](https://badges.frapsoft.com/os/v1/open-source.png?v=103)]()
@@ -22,13 +24,18 @@ Plugin to create live results for pytest.
 ### How to use in project:
 
 1. Install `pytest-live-results`
-   
-   > Case 1: Using `setup.py` (clone repo and run command in root)
+
+   > Case 1: Using pip
+   ```
+   pip install pytest-live
+   ```
+
+   > Case 2: Using `setup.py` (clone repo and run command in root)
    ```
    python setup.py install
    ```
 
-   > Case 2: Install from git (changes in master)
+   > Case 3: Install from git (changes in master)
    ```
    pip install git+https://github.com/adiralashiva8/pytest-live-results
    ```
