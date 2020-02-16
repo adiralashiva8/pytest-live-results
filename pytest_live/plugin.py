@@ -46,73 +46,60 @@ def pytest_runtest_setup(item):
 def pytest_runtest_makereport(item, call):
     outcome = yield
     rep = outcome.get_result()
+    global _test_status
+    global _current_error
+    global _xpass
+    global _pass
+    global _fail
+    global _xfail
+    global _error
+    global _skip
 
     if rep.when == "call" and rep.passed:
         if hasattr(rep, "wasxfail"):
-            global _xpass
             _xpass += 1
-            global _test_status
             _test_status = "xPASS"
-            global _current_error
             _current_error = ""
         else:
-            global _pass
             _pass += 1
-            global _test_status
             _test_status = "PASS"
-            global _current_error
             _current_error = ""
     
     if rep.failed:
         if getattr(rep, "when", None) == "call":
             if hasattr(rep, "wasxfail"):
-                global _xpass
                 _xpass += 1
-                global _test_status
                 _test_status = "xPASS"
-                global _current_error
                 _current_error = ""
             else:
-                global _fail
                 _fail += 1
-                global _test_status
                 _test_status = "FAIL"
                 if rep.longrepr:
                     for line in rep.longreprtext.splitlines():
                         exception = line.startswith("E   ")
                         if exception:
-                            global _current_error
                             _current_error = line.replace("E    ","")
         else:
-            global _error
             _error += 1
-            global _test_status
             _test_status = "ERROR"
             if rep.longrepr:
                 for line in rep.longreprtext.splitlines():
-                    global _current_error
                     _current_error = line
     
     if rep.skipped:
         if hasattr(rep, "wasxfail"):
-            global _xfail
             _xfail += 1
-            global _test_status
             _test_status = "xFAIL"
             if rep.longrepr:
                 for line in rep.longreprtext.splitlines():
                     exception = line.startswith("E   ")
                     if exception:
-                        global _current_error
                         _current_error = line.replace("E    ","")
         else:
-            global _skip
             _skip += 1
-            global _test_status
             _test_status = "SKIP"
             if rep.longrepr:
                 for line in rep.longreprtext.splitlines():
-                    global _current_error
                     _current_error = line
 
 def pytest_runtest_teardown(item, nextitem):

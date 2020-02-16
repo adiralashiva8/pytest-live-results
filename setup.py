@@ -20,16 +20,16 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
     license="MIT license",
+    packages=find_packages(),
     include_package_data=True,
+    zip_safe=False,
     keywords=[
         'pytest', 'py.test', 'live',
     ],
     name='pytest-live',
-    packages=find_packages(include=['pytest_live']),
-    setup_requires=setup_requirements,
     url='https://github.com/adiralashiva8/pytest-live-results',
-    version='0.1',
-    zip_safe=True,
+    version='0.2',
+
     install_requires=[
         'pytest',
         'pytest-runner'
