@@ -1,6 +1,6 @@
 import pytest
 import time
-import os 
+import os
 import webbrowser
 
 from _pytest.runner import pytest_sessionstart
@@ -23,6 +23,7 @@ _test_name = None
 _test_status = None
 _duration = ""
 _test_start_time = None
+_now = 0
 
 def pytest_sessionstart(session):
     # create live logs report and close
@@ -34,7 +35,7 @@ def pytest_sessionstart(session):
     # get location of livelogs
     current_dir = os.getcwd()
     filename =  current_dir + '/LiveLogs.html'
-    
+
     # launch browser with livelogs
     webbrowser.open_new_tab(filename)
 
@@ -54,6 +55,10 @@ def pytest_runtest_makereport(item, call):
     global _xfail
     global _error
     global _skip
+    global _now
+
+    current_time = time.localtime()
+    _now = time.strftime("%d %b, %H:%M:%S", current_time)
 
     if rep.when == "call" and rep.passed:
         if hasattr(rep, "wasxfail"):
@@ -64,7 +69,7 @@ def pytest_runtest_makereport(item, call):
             _pass += 1
             _test_status = "PASS"
             _current_error = ""
-    
+
     if rep.failed:
         if getattr(rep, "when", None) == "call":
             if hasattr(rep, "wasxfail"):
@@ -85,7 +90,7 @@ def pytest_runtest_makereport(item, call):
             if rep.longrepr:
                 for line in rep.longreprtext.splitlines():
                     _current_error = line
-    
+
     if rep.skipped:
         if hasattr(rep, "wasxfail"):
             _xfail += 1
@@ -122,7 +127,7 @@ def pytest_runtest_teardown(item, nextitem):
 
     global _content
     _content += table_text
-    
+
     live_logs_file = open('LiveLogs.html','w')
     message = get_updated_html_text()
     live_logs_file.write(message)
@@ -188,6 +193,7 @@ def get_html_template():
             <thead>
                 <tr>
                     <th style="width: 8%">SN</th>
+                    <th style="width: 10%">Time</th>
                     <th style="width: 30%">Test Case</th>
                     <th style="width: 10%">Status</th>
                     <th style="width: 10%">Duration (s)</th>
@@ -260,6 +266,7 @@ def generate_table_row():
     row_text = """
         <tr>
             <td style="width: 8%; text-align:center;">__id__</td>
+            <td style="width: 10%; text-align:center;">__now__</td>
             <td style="width: 30%;">__name__</td>
             <td style="width: 10%; "text-align:center;">__stat__</td>
             <td style="width: 10%; text-align:center;">__dur__</td>
@@ -268,6 +275,7 @@ def generate_table_row():
     """
 
     row_text = row_text.replace("__id__",str(_total))
+    row_text = row_text.replace("__now__",str(_now))
     row_text = row_text.replace("__name__",str(_test_name))
     row_text = row_text.replace("__stat__",str(_test_status))
     row_text = row_text.replace("__dur__",str(round(_duration,2)))
