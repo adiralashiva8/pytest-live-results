@@ -24,114 +24,136 @@ _test_status = None
 _duration = ""
 _test_start_time = None
 _now = 0
+live_status = False
 
+def pytest_addoption(parser):
+    group = parser.getgroup('live')
+    group.addoption(
+        '--live',
+        action='store',
+        dest='live',
+        default="False",
+        help='Enable or disable live report'
+    )
+
+@pytest.hookimpl()
 def pytest_sessionstart(session):
-    # create live logs report and close
-    live_logs_file = open('LiveLogs.html','w')
-    message = get_updated_html_text()
-    live_logs_file.write(message)
-    live_logs_file.close()
 
-    # get location of livelogs
-    current_dir = os.getcwd()
-    filename =  current_dir + '/LiveLogs.html'
+    global live_status
+    live_status = session.config.option.live
 
-    # launch browser with livelogs
-    webbrowser.open_new_tab(filename)
+    if live_status == "True":
+        print("++++++++++++++ Inside True block ++++++++++++++ ")
+        # create live logs report and close
+        live_logs_file = open('LiveLogs.html','w')
+        message = get_updated_html_text()
+        live_logs_file.write(message)
+        live_logs_file.close()
+
+        # get location of livelogs
+        current_dir = os.getcwd()
+        filename =  current_dir + '/LiveLogs.html'
+
+        # launch browser with livelogs
+        webbrowser.open_new_tab(filename)
 
 def pytest_runtest_setup(item):
-    global _test_start_time
-    _test_start_time = time.time()
+    if live_status == "True":
+        global _test_start_time
+        _test_start_time = time.time()
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
-    rep = outcome.get_result()
-    global _test_status
-    global _current_error
-    global _xpass
-    global _pass
-    global _fail
-    global _xfail
-    global _error
-    global _skip
-    global _now
+    if live_status == "True":
+        rep = outcome.get_result()
+        global _test_status
+        global _current_error
+        global _xpass
+        global _pass
+        global _fail
+        global _xfail
+        global _error
+        global _skip
+        global _now
 
-    current_time = time.localtime()
-    _now = time.strftime("%d %b, %H:%M:%S", current_time)
+        current_time = time.localtime()
+        _now = time.strftime("%d %b, %H:%M:%S", current_time)
 
-    if rep.when == "call" and rep.passed:
-        if hasattr(rep, "wasxfail"):
-            _xpass += 1
-            _test_status = "xPASS"
-            _current_error = ""
-        else:
-            _pass += 1
-            _test_status = "PASS"
-            _current_error = ""
-
-    if rep.failed:
-        if getattr(rep, "when", None) == "call":
+        if rep.when == "call" and rep.passed:
             if hasattr(rep, "wasxfail"):
                 _xpass += 1
                 _test_status = "xPASS"
                 _current_error = ""
             else:
-                _fail += 1
-                _test_status = "FAIL"
+                _pass += 1
+                _test_status = "PASS"
+                _current_error = ""
+
+        if rep.failed:
+            if getattr(rep, "when", None) == "call":
+                if hasattr(rep, "wasxfail"):
+                    _xpass += 1
+                    _test_status = "xPASS"
+                    _current_error = ""
+                else:
+                    _fail += 1
+                    _test_status = "FAIL"
+                    if rep.longrepr:
+                        for line in rep.longreprtext.splitlines():
+                            exception = line.startswith("E   ")
+                            if exception:
+                                _current_error = line.replace("E    ","")
+            else:
+                _error += 1
+                _test_status = "ERROR"
+                if rep.longrepr:
+                    for line in rep.longreprtext.splitlines():
+                        _current_error = line
+
+        if rep.skipped:
+            if hasattr(rep, "wasxfail"):
+                _xfail += 1
+                _test_status = "xFAIL"
                 if rep.longrepr:
                     for line in rep.longreprtext.splitlines():
                         exception = line.startswith("E   ")
                         if exception:
                             _current_error = line.replace("E    ","")
-        else:
-            _error += 1
-            _test_status = "ERROR"
-            if rep.longrepr:
-                for line in rep.longreprtext.splitlines():
-                    _current_error = line
-
-    if rep.skipped:
-        if hasattr(rep, "wasxfail"):
-            _xfail += 1
-            _test_status = "xFAIL"
-            if rep.longrepr:
-                for line in rep.longreprtext.splitlines():
-                    exception = line.startswith("E   ")
-                    if exception:
-                        _current_error = line.replace("E    ","")
-        else:
-            _skip += 1
-            _test_status = "SKIP"
-            if rep.longrepr:
-                for line in rep.longreprtext.splitlines():
-                    _current_error = line
+            else:
+                _skip += 1
+                _test_status = "SKIP"
+                if rep.longrepr:
+                    for line in rep.longreprtext.splitlines():
+                        _current_error = line
 
 def pytest_runtest_teardown(item, nextitem):
 
-    _test_end_time = time.time()
+    if live_status == "True":
 
-    global _test_name
-    _test_name = item.name
+        _test_end_time = time.time()
 
-    global _total
-    _total =  _pass + _fail + _xpass + _xfail + _skip + _error
+        global _test_name
+        _test_name = item.name
 
-    global _executed
-    _executed = _pass + _fail + _xpass + _xfail
+        global _total
+        _total =  _pass + _fail + _xpass + _xfail + _skip + _error
 
-    global _duration
-    _duration = _test_end_time - _test_start_time
+        global _executed
+        _executed = _pass + _fail + _xpass + _xfail
 
-    table_text = generate_table_row()
+        global _duration
+        _duration = _test_end_time - _test_start_time
 
-    global _content
-    _content += table_text
+        table_text = generate_table_row()
 
-    live_logs_file = open('LiveLogs.html','w')
-    message = get_updated_html_text()
-    live_logs_file.write(message)
-    live_logs_file.close()
+        global _content
+        _content += table_text
+
+        live_logs_file = open('LiveLogs.html','w')
+        message = get_updated_html_text()
+        live_logs_file.write(message)
+        live_logs_file.close()
 
 
 def get_html_template():
@@ -141,11 +163,25 @@ def get_html_template():
     <head>
         <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-        <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
-        <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <!-- Bootstrap core Datatable-->
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js" type="text/javascript"></script>
+
+	<style>
+        .dt-buttons {
+            margin-left: 5px;
+        }
+    </style>
     </head>
 
     <body>
@@ -208,7 +244,63 @@ def get_html_template():
                 $('#example').DataTable({
                     "order": [
                         [0, "desc"]
-                    ]
+                    ],
+					"lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+					dom: 'l<".margin" B>frtip',
+                    buttons: [
+                         {
+							extend:    'copyHtml5',
+							text:      '<i class="fa fa-files-o"></i>',
+							titleAttr: 'Copy',
+							exportOptions: {
+								columns: ':visible'
+							}
+						},
+                        {
+                            extend:    'csvHtml5',
+							text:      '<i class="fa fa-file-text-o"></i>',
+							titleAttr: 'CSV',
+                            filename: function() {
+                                return fileTitle + '-' + new Date().toLocaleString();
+                            },
+							exportOptions: {
+								columns: ':visible'
+							}
+                        },
+                        {
+                            extend:    'excelHtml5',
+							text:      '<i class="fa fa-file-excel-o"></i>',
+							titleAttr: 'Excel',
+                            filename: function() {
+                                return fileTitle + '-' + new Date().toLocaleString();
+                            },
+							exportOptions: {
+								columns: ':visible'
+							}
+                        },
+                        {
+							extend:    'print',
+							text:      '<i class="fa fa-print"></i>',
+							titleAttr: 'Print',
+							exportOptions: {
+								columns: ':visible',
+                                alignment: 'left',
+							}
+                        },
+						{
+							extend:    'colvis',
+							collectionLayout: 'fixed two-column',
+							text:      '<i class="fa fa-low-vision"></i>',
+							titleAttr: 'Hide Column',
+							exportOptions: {
+								columns: ':visible'
+							},
+							postfixButtons: [ 'colvisRestore' ]
+                        },
+                    ],
+					columnDefs: [ {
+						visible: false,
+					} ]
                 });
             });
         </script>

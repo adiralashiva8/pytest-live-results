@@ -40,17 +40,17 @@ Plugin to create live results for pytest.
    pip install git+https://github.com/adiralashiva8/pytest-live-results
    ```
 
-3. Execute test case normally
+3. Execute test case by enabling live logs
     ```
-    pytest
+    pytest --live=True
     ```
-    > No code changes or run command required
+    > Default --live=False
 
 ---
 
 *SAMPLE REPORT*
 
-<img src="live_result.jpg" alt="live_result.jpg">
+<img src="live_result.png" alt="live_result.png">
 
 ---
 
