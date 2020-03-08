@@ -48,9 +48,9 @@ Plugin to create live results for pytest.
 
 ---
 
-*Appending Timestamp*
+*Appending Timestamp to report name*
 
- - Users can append timestamp to live report using following command
+ - User can append timestamp to the name of live report (Ex: pytest_live_dd_MMM_yy_hh_mm_ss) using following command.
    ```
    pytest --live=True --livetimestamp=True
    ```
