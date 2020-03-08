@@ -16,7 +16,6 @@ setup(
         'Framework :: Pytest',
         'Programming Language :: Python',
         'Topic :: Software Development :: Testing',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.7',
     ],
     license="MIT license",
@@ -28,7 +27,7 @@ setup(
     ],
     name='pytest-live',
     url='https://github.com/adiralashiva8/pytest-live-results',
-    version='0.4',
+    version='0.5',
 
     install_requires=[
         'pytest',

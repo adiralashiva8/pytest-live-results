@@ -43,7 +43,6 @@ def pytest_sessionstart(session):
     live_status = session.config.option.live
 
     if live_status == "True":
-        print("++++++++++++++ Inside True block ++++++++++++++ ")
         # create live logs report and close
         live_logs_file = open('LiveLogs.html','w')
         message = get_updated_html_text()
@@ -207,20 +206,20 @@ def get_html_template():
                     <td style="border-radius: 25px;width: 12.5%;background: DARKCYAN;">EXECUTED</td>
                     <td style="border-radius: 25px;width: 12.5%;background: FORESTGREEN;">PASS</td>
                     <td style="border-radius: 25px;width: 12.5%;background: RED;">FAIL</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: DARKKHAKI;">SKIP</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: GRAY;">ERROR</td>
                     <td style="border-radius: 25px;width: 12.5%;background: SEAGREEN;">xPASS</td>
                     <td style="border-radius: 25px;width: 12.5%;background: TOMATO;">xFAIL</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: DARKKHAKI;">SKIP</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: GRAY;">ERROR</td>
                 </tr>
                 <tr style="text-align: center; height: 40px; font-weight:bold">
                     <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__total__</td>
                     <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__executed__</td>
                     <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__pass__</td>
                     <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__fail__</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__skip__</td>
-                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__error__</td>
                     <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__xpass__</td>
                     <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__xfail__</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__skip__</td>
+                    <td style="border-radius: 25px;width: 12.5%;background: LAVENDER;">__error__</td>
                 </tr>
             </tbody>
         </table>
