@@ -24,7 +24,9 @@ _test_status = None
 _duration = ""
 _test_start_time = None
 _now = 0
-live_status = False
+_live_status = False
+_live_timestamp = False
+_live_report_name = 'pytest_live.html'
 
 def pytest_addoption(parser):
     group = parser.getgroup('live')
@@ -35,124 +37,147 @@ def pytest_addoption(parser):
         default="False",
         help='Enable or disable live report'
     )
+    group.addoption(
+        '--livetimestamp',
+        action='store',
+        dest='livetimestamp',
+        default="False",
+        help='Append timestamp to live log report'
+    )
 
 @pytest.hookimpl()
 def pytest_sessionstart(session):
 
-    global live_status
-    live_status = session.config.option.live
+    global _live_status
+    _live_status = session.config.option.live
 
-    if live_status == "True":
-        # create live logs report and close
-        live_logs_file = open('LiveLogs.html','w')
-        message = get_updated_html_text()
-        live_logs_file.write(message)
-        live_logs_file.close()
+    if _live_status != "True":
+        return
 
-        # get location of livelogs
-        current_dir = os.getcwd()
-        filename =  current_dir + '/LiveLogs.html'
+    global _live_timestamp
+    _live_timestamp = session.config.option.livetimestamp
 
-        # launch browser with livelogs
-        webbrowser.open_new_tab(filename)
+    if _live_timestamp == "True":
+        current_time = time.localtime()
+        _now = time.strftime("%d_%b_%H_%M_%S", current_time)
+        global _live_report_name
+        _live_report_name = "pytest_live_" + _now + ".html"
+
+    # create live logs report and close
+    live_logs_file = open(_live_report_name,'w')
+    message = get_updated_html_text()
+    live_logs_file.write(message)
+    live_logs_file.close()
+
+    # get location of livelogs
+    current_dir = os.getcwd()
+    filename =  current_dir + '/' + _live_report_name
+
+    # launch browser with livelogs
+    webbrowser.open_new_tab(filename)
 
 def pytest_runtest_setup(item):
-    if live_status == "True":
-        global _test_start_time
-        _test_start_time = time.time()
+    if _live_status != "True":
+        return
+
+    global _test_start_time
+    _test_start_time = time.time()
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
-    if live_status == "True":
-        rep = outcome.get_result()
-        global _test_status
-        global _current_error
-        global _xpass
-        global _pass
-        global _fail
-        global _xfail
-        global _error
-        global _skip
-        global _now
+    if _live_status != "True":
+        return
 
-        current_time = time.localtime()
-        _now = time.strftime("%d %b, %H:%M:%S", current_time)
+    rep = outcome.get_result()
+    global _test_status
+    global _current_error
+    global _xpass
+    global _pass
+    global _fail
+    global _xfail
+    global _error
+    global _skip
+    global _now
 
-        if rep.when == "call" and rep.passed:
+    current_time = time.localtime()
+    _now = time.strftime("%d %b, %H:%M:%S", current_time)
+
+    if rep.when == "call" and rep.passed:
+        if hasattr(rep, "wasxfail"):
+            _xpass += 1
+            _test_status = "xPASS"
+            _current_error = ""
+        else:
+            _pass += 1
+            _test_status = "PASS"
+            _current_error = ""
+
+    if rep.failed:
+        if getattr(rep, "when", None) == "call":
             if hasattr(rep, "wasxfail"):
                 _xpass += 1
                 _test_status = "xPASS"
                 _current_error = ""
             else:
-                _pass += 1
-                _test_status = "PASS"
-                _current_error = ""
-
-        if rep.failed:
-            if getattr(rep, "when", None) == "call":
-                if hasattr(rep, "wasxfail"):
-                    _xpass += 1
-                    _test_status = "xPASS"
-                    _current_error = ""
-                else:
-                    _fail += 1
-                    _test_status = "FAIL"
-                    if rep.longrepr:
-                        for line in rep.longreprtext.splitlines():
-                            exception = line.startswith("E   ")
-                            if exception:
-                                _current_error = line.replace("E    ","")
-            else:
-                _error += 1
-                _test_status = "ERROR"
-                if rep.longrepr:
-                    for line in rep.longreprtext.splitlines():
-                        _current_error = line
-
-        if rep.skipped:
-            if hasattr(rep, "wasxfail"):
-                _xfail += 1
-                _test_status = "xFAIL"
+                _fail += 1
+                _test_status = "FAIL"
                 if rep.longrepr:
                     for line in rep.longreprtext.splitlines():
                         exception = line.startswith("E   ")
                         if exception:
                             _current_error = line.replace("E    ","")
-            else:
-                _skip += 1
-                _test_status = "SKIP"
-                if rep.longrepr:
-                    for line in rep.longreprtext.splitlines():
-                        _current_error = line
+        else:
+            _error += 1
+            _test_status = "ERROR"
+            if rep.longrepr:
+                for line in rep.longreprtext.splitlines():
+                    _current_error = line
+
+    if rep.skipped:
+        if hasattr(rep, "wasxfail"):
+            _xfail += 1
+            _test_status = "xFAIL"
+            if rep.longrepr:
+                for line in rep.longreprtext.splitlines():
+                    exception = line.startswith("E   ")
+                    if exception:
+                        _current_error = line.replace("E    ","")
+        else:
+            _skip += 1
+            _test_status = "SKIP"
+            if rep.longrepr:
+                for line in rep.longreprtext.splitlines():
+                    _current_error = line
 
 def pytest_runtest_teardown(item, nextitem):
 
-    if live_status == "True":
+    if _live_status != "True":
+        return
 
-        _test_end_time = time.time()
+    _test_end_time = time.time()
 
-        global _test_name
-        _test_name = item.name
+    global _test_name
+    _test_name = item.name
 
-        global _total
-        _total =  _pass + _fail + _xpass + _xfail + _skip + _error
+    global _total
+    _total =  _pass + _fail + _xpass + _xfail + _skip + _error
 
-        global _executed
-        _executed = _pass + _fail + _xpass + _xfail
+    global _executed
+    _executed = _pass + _fail + _xpass + _xfail
 
-        global _duration
-        _duration = _test_end_time - _test_start_time
+    global _duration
+    _duration = _test_end_time - _test_start_time
 
-        table_text = generate_table_row()
+    table_text = generate_table_row()
 
-        global _content
-        _content += table_text
+    global _content
+    _content += table_text
 
-        live_logs_file = open('LiveLogs.html','w')
-        message = get_updated_html_text()
-        live_logs_file.write(message)
-        live_logs_file.close()
+    live_logs_file = open(_live_report_name,'w')
+    message = get_updated_html_text()
+    live_logs_file.write(message)
+    live_logs_file.close()
 
 
 def get_html_template():
@@ -260,7 +285,7 @@ def get_html_template():
 							text:      '<i class="fa fa-file-text-o"></i>',
 							titleAttr: 'CSV',
                             filename: function() {
-                                return fileTitle + '-' + new Date().toLocaleString();
+                                return 'Live_Execution_Result';
                             },
 							exportOptions: {
 								columns: ':visible'
@@ -271,7 +296,7 @@ def get_html_template():
 							text:      '<i class="fa fa-file-excel-o"></i>',
 							titleAttr: 'Excel',
                             filename: function() {
-                                return fileTitle + '-' + new Date().toLocaleString();
+                                return 'Live_Execution_Result';
                             },
 							exportOptions: {
 								columns: ':visible'

@@ -48,6 +48,15 @@ Plugin to create live results for pytest.
 
 ---
 
+*Appending Timestamp*
+
+ - Users can append timestamp to live report using following command
+   ```
+   pytest --live=True --livetimestamp=True
+   ```
+   > Default --livetimestamp=False
+---
+
 *SAMPLE REPORT*
 
 <img src="live_result.png" alt="live_result.png">
@@ -70,6 +79,14 @@ If you have any questions / suggestions / comments on this, please feel free to 
  - [Stackoverflow](https://stackoverflow.com/questions/tagged/pytest)
  - [Datatable](https://datatables.net)
  - [pytest-community]()
+
+---
+*Special Thanks To*
+
+
+*Feedback & Suggestions*
+
+ - [Rahul Parwal](https://www.linkedin.com/in/rahul-parwal/)
 
 ---
 

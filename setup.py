@@ -27,7 +27,7 @@ setup(
     ],
     name='pytest-live',
     url='https://github.com/adiralashiva8/pytest-live-results',
-    version='0.5',
+    version='0.6',
 
     install_requires=[
         'pytest',
